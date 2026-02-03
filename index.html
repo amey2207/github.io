@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amey Chaudhari | HR Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -14,38 +12,33 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* Smooth scroll */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f0f1a;
+            background: #0a0a0f;
         }
         ::-webkit-scrollbar-thumb {
             background: #8b5cf6;
             border-radius: 4px;
         }
 
-        /* Glass effect */
         .glass {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Gradient text */
         .gradient-text {
             background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Card hover */
         .hover-card {
             transition: all 0.3s ease;
         }
@@ -54,61 +47,93 @@
             box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
         }
 
-        /* Game canvas */
-        #gameCanvas {
-            border-radius: 1rem;
-            cursor: pointer;
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
         }
 
-        /* Timeline */
+        .nav-link.active {
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            border-radius: 2px;
+        }
+
+        .nav-link.active .check-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .check-icon {
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+            margin-left: 4px;
+        }
+
         .timeline-item {
             opacity: 0;
             transform: translateY(30px);
+            transition: all 0.6s ease;
         }
         .timeline-item.visible {
             opacity: 1;
             transform: translateY(0);
-            transition: all 0.6s ease;
         }
 
-        /* Skill bar animation */
-        .skill-fill {
-            width: 0;
-            transition: width 1.5s ease;
+        .skill-tag {
+            transition: all 0.3s ease;
         }
-
-        /* Floating animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .float {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* Pulse animation for CTA */
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
-            50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
-        }
-        .pulse-glow {
-            animation: pulse-glow 2s infinite;
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
         }
     </style>
 </head>
 <body class="bg-[#0a0a0f] text-white overflow-x-hidden">
 
-    <!-- Navigation -->
+    <!-- Navigation with Scroll Spy -->
     <nav class="fixed w-full z-50 top-0 px-4 py-4">
         <div class="glass rounded-2xl px-6 py-4 max-w-6xl mx-auto flex justify-between items-center">
             <div class="text-xl font-bold gradient-text">Amey Chaudhari</div>
-            <div class="hidden md:flex space-x-6 text-sm">
-                <a href="#about" class="hover:text-violet-400 transition-colors">About</a>
-                <a href="#education" class="hover:text-violet-400 transition-colors">Education</a>
-                <a href="#experience" class="hover:text-violet-400 transition-colors">Experience</a>
-                <a href="#projects" class="hover:text-violet-400 transition-colors">Projects</a>
-                <a href="#game" class="hover:text-violet-400 transition-colors">Game</a>
-                <a href="#contact" class="px-4 py-2 bg-violet-600 rounded-full hover:bg-violet-700 transition-colors">Contact</a>
+            <div class="hidden md:flex space-x-6 text-sm items-center">
+                <a href="#about" class="nav-link flex items-center" data-section="about">
+                    About
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#education" class="nav-link flex items-center" data-section="education">
+                    Education
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#experience" class="nav-link flex items-center" data-section="experience">
+                    Experience
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#projects" class="nav-link flex items-center" data-section="projects">
+                    Projects
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#skills" class="nav-link flex items-center" data-section="skills">
+                    Skills
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#achievements" class="nav-link flex items-center" data-section="achievements">
+                    Achievements
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-violet-400"></i>
+                </a>
+                <a href="#contact" class="nav-link flex items-center px-4 py-2 bg-violet-600 rounded-full hover:bg-violet-700 transition-colors" data-section="contact">
+                    Contact
+                    <i data-lucide="check" class="w-4 h-4 check-icon text-white"></i>
+                </a>
             </div>
             <button class="md:hidden" onclick="toggleMenu()">
                 <i data-lucide="menu" class="w-6 h-6"></i>
@@ -122,7 +147,8 @@
         <a href="#education" class="text-xl" onclick="toggleMenu()">Education</a>
         <a href="#experience" class="text-xl" onclick="toggleMenu()">Experience</a>
         <a href="#projects" class="text-xl" onclick="toggleMenu()">Projects</a>
-        <a href="#game" class="text-xl" onclick="toggleMenu()">Game</a>
+        <a href="#skills" class="text-xl" onclick="toggleMenu()">Skills</a>
+        <a href="#achievements" class="text-xl" onclick="toggleMenu()">Achievements</a>
         <a href="#contact" class="text-xl text-violet-400" onclick="toggleMenu()">Contact</a>
     </div>
 
@@ -170,7 +196,6 @@
             </h2>
 
             <div class="space-y-6">
-                <!-- MBA -->
                 <div class="glass rounded-2xl p-6 hover-card cursor-pointer" onclick="toggleDetails('edu1')">
                     <div class="flex justify-between items-start">
                         <div>
@@ -185,7 +210,6 @@
                     </div>
                 </div>
 
-                <!-- B.Engg -->
                 <div class="glass rounded-2xl p-6 hover-card cursor-pointer" onclick="toggleDetails('edu2')">
                     <div class="flex justify-between items-start">
                         <div>
@@ -200,7 +224,6 @@
                     </div>
                 </div>
 
-                <!-- Class XII -->
                 <div class="glass rounded-2xl p-6 hover-card cursor-pointer" onclick="toggleDetails('edu3')">
                     <div class="flex justify-between items-start">
                         <div>
@@ -215,7 +238,6 @@
                     </div>
                 </div>
 
-                <!-- Class X -->
                 <div class="glass rounded-2xl p-6 hover-card cursor-pointer" onclick="toggleDetails('edu4')">
                     <div class="flex justify-between items-start">
                         <div>
@@ -241,7 +263,6 @@
             </h2>
 
             <div class="space-y-8">
-                <!-- WebMOBI -->
                 <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-violet-500">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                         <div>
@@ -266,7 +287,6 @@
                     </ul>
                 </div>
 
-                <!-- Renu Electronics -->
                 <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-pink-500">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                         <div>
@@ -302,7 +322,6 @@
             </h2>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Project 1 -->
                 <div class="glass rounded-2xl overflow-hidden hover-card group">
                     <div class="h-48 bg-gradient-to-br from-violet-600 to-purple-800 flex items-center justify-center">
                         <i data-lucide="users-round" class="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform"></i>
@@ -317,7 +336,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div class="glass rounded-2xl overflow-hidden hover-card group">
                     <div class="h-48 bg-gradient-to-br from-blue-600 to-cyan-800 flex items-center justify-center">
                         <i data-lucide="graduation-cap" class="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform"></i>
@@ -332,7 +350,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div class="glass rounded-2xl overflow-hidden hover-card group">
                     <div class="h-48 bg-gradient-to-br from-fuchsia-600 to-pink-800 flex items-center justify-center">
                         <i data-lucide="shield" class="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform"></i>
@@ -347,7 +364,6 @@
                     </div>
                 </div>
 
-                <!-- Project 4 -->
                 <div class="glass rounded-2xl overflow-hidden hover-card group">
                     <div class="h-48 bg-gradient-to-br from-green-600 to-teal-800 flex items-center justify-center">
                         <i data-lucide="heart" class="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform"></i>
@@ -362,7 +378,6 @@
                     </div>
                 </div>
 
-                <!-- Project 5 -->
                 <div class="glass rounded-2xl overflow-hidden hover-card group md:col-span-2 lg:col-span-1">
                     <div class="h-48 bg-gradient-to-br from-orange-600 to-red-800 flex items-center justify-center">
                         <i data-lucide="activity" class="w-16 h-16 text-white/80 group-hover:scale-110 transition-transform"></i>
@@ -380,108 +395,34 @@
         </div>
     </section>
 
-    <!-- Interactive Game Section -->
-    <section id="game" class="py-20 px-4 bg-white/5">
+    <!-- Skills Section - Simple Tags Only -->
+    <section id="skills" class="py-20 px-4 bg-white/5">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold mb-4">
-                <span class="gradient-text">Take a Break</span>
-            </h2>
-            <p class="text-gray-400 mb-8">Play a quick game while you're here! Click to jump, avoid obstacles.</p>
-            
-            <div class="relative inline-block">
-                <canvas id="gameCanvas" width="600" height="300" class="bg-gray-900 border-2 border-violet-600"></canvas>
-                <div id="gameOverlay" class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
-                    <button onclick="startGame()" class="px-8 py-4 bg-violet-600 rounded-full font-bold text-xl hover:bg-violet-700 transition-colors pulse-glow">
-                        Start Game
-                    </button>
-                </div>
-                <div id="scoreDisplay" class="absolute top-4 left-4 text-2xl font-bold text-white hidden">Score: 0</div>
-            </div>
-            
-            <p class="text-sm text-gray-500 mt-4">Press SPACE or Click to jump</p>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="py-20 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-12 text-center">
+            <h2 class="text-4xl font-bold mb-12">
                 <span class="gradient-text">Skills</span>
             </h2>
             
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">MS Excel Advanced</span>
-                            <span class="text-sm text-gray-400">95%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-violet-600 h-2 rounded-full" data-width="95%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Power BI</span>
-                            <span class="text-sm text-gray-400">85%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-violet-600 h-2 rounded-full" data-width="85%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Tableau</span>
-                            <span class="text-sm text-gray-400">80%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-violet-600 h-2 rounded-full" data-width="80%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Recruitment & HR Ops</span>
-                            <span class="text-sm text-gray-400">90%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-pink-600 h-2 rounded-full" data-width="90%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Android Development</span>
-                            <span class="text-sm text-gray-400">75%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-pink-600 h-2 rounded-full" data-width="75%"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium">Data Analytics</span>
-                            <span class="text-sm text-gray-400">85%</span>
-                        </div>
-                        <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="skill-fill bg-pink-600 h-2 rounded-full" data-width="85%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-3 mt-12">
-                <span class="px-4 py-2 glass rounded-full text-sm hover:bg-violet-600/20 transition-colors cursor-default">Google Suite</span>
-                <span class="px-4 py-2 glass rounded-full text-sm hover:bg-violet-600/20 transition-colors cursor-default">Canva</span>
-                <span class="px-4 py-2 glass rounded-full text-sm hover:bg-violet-600/20 transition-colors cursor-default">Kotlin</span>
-                <span class="px-4 py-2 glass rounded-full text-sm hover:bg-violet-600/20 transition-colors cursor-default">MS 365</span>
-                <span class="px-4 py-2 glass rounded-full text-sm hover:bg-violet-600/20 transition-colors cursor-default">HR Analytics</span>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">MS Excel Advanced</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Power BI</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Tableau</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Google Suite</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Canva</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Android Studio</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Kotlin</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">MS 365 Suite</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Recruitment Tools</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">HR Analytics</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Talent Acquisition</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Employee Engagement</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Process Design</span>
+                <span class="skill-tag px-6 py-3 glass rounded-full text-sm font-medium cursor-default hover:bg-violet-600/20">Data Analysis</span>
             </div>
         </div>
     </section>
 
     <!-- Achievements -->
-    <section class="py-20 px-4 bg-white/5">
+    <section id="achievements" class="py-20 px-4">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 <span class="gradient-text">Achievements</span>
@@ -532,7 +473,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4">
+    <section id="contact" class="py-20 px-4 bg-white/5">
         <div class="max-w-2xl mx-auto glass rounded-3xl p-8 md:p-12 text-center">
             <h2 class="text-4xl font-bold mb-4">Let's Connect</h2>
             <p class="text-gray-400 mb-8">Open to opportunities in Talent Acquisition, HR Operations, and Employee Engagement</p>
@@ -574,9 +515,6 @@
         // Initialize Lucide icons
         lucide.createIcons();
 
-        // Register GSAP
-        gsap.registerPlugin(ScrollTrigger);
-
         // Mobile menu toggle
         function toggleMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -598,143 +536,49 @@
             }
         }
 
-        // Animate timeline items
-        gsap.utils.toArray('.timeline-item').forEach((item, i) => {
-            ScrollTrigger.create({
-                trigger: item,
-                start: "top 85%",
-                onEnter: () => item.classList.add('visible'),
-                once: true
-            });
-        });
+        // Scroll Spy Navigation
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-        // Animate skill bars
-        gsap.utils.toArray('.skill-fill').forEach(bar => {
-            ScrollTrigger.create({
-                trigger: bar,
-                start: "top 90%",
-                onEnter: () => {
-                    bar.style.width = bar.getAttribute('data-width');
-                },
-                once: true
-            });
-        });
-
-        // Simple Jump Game
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const overlay = document.getElementById('gameOverlay');
-        const scoreDisplay = document.getElementById('scoreDisplay');
-        
-        let gameRunning = false;
-        let score = 0;
-        let player = { x: 50, y: 250, width: 30, height: 30, dy: 0, jump: false };
-        let obstacles = [];
-        let gameLoop;
-        let obstacleTimer;
-
-        function startGame() {
-            overlay.classList.add('hidden');
-            scoreDisplay.classList.remove('hidden');
-            gameRunning = true;
-            score = 0;
-            player.y = 250;
-            player.dy = 0;
-            obstacles = [];
+        function updateActiveNav() {
+            let current = '';
             
-            gameLoop = setInterval(updateGame, 20);
-            obstacleTimer = setInterval(createObstacle, 2000);
-            
-            document.addEventListener('keydown', jump);
-            canvas.addEventListener('click', jump);
-            canvas.addEventListener('touchstart', jump);
-        }
-
-        function jump(e) {
-            if ((e.code === 'Space' || e.type === 'click' || e.type === 'touchstart') && player.y >= 250) {
-                player.dy = -12;
-                player.jump = true;
-            }
-        }
-
-        function createObstacle() {
-            if (!gameRunning) return;
-            obstacles.push({ x: 600, y: 260, width: 20, height: 40 });
-        }
-
-        function updateGame() {
-            // Clear canvas
-            ctx.fillStyle = '#111827';
-            ctx.fillRect(0, 0, 600, 300);
-            
-            // Draw ground
-            ctx.fillStyle = '#374151';
-            ctx.fillRect(0, 280, 600, 20);
-            
-            // Update player
-            player.dy += 0.6; // gravity
-            player.y += player.dy;
-            
-            if (player.y > 250) {
-                player.y = 250;
-                player.dy = 0;
-                player.jump = false;
-            }
-            
-            // Draw player (cube)
-            ctx.fillStyle = '#8b5cf6';
-            ctx.fillRect(player.x, player.y, player.width, player.height);
-            
-            // Update and draw obstacles
-            ctx.fillStyle = '#ec4899';
-            for (let i = obstacles.length - 1; i >= 0; i--) {
-                obstacles[i].x -= 5;
-                ctx.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
-                
-                // Collision detection
-                if (
-                    player.x < obstacles[i].x + obstacles[i].width &&
-                    player.x + player.width > obstacles[i].x &&
-                    player.y < obstacles[i].y + obstacles[i].height &&
-                    player.y + player.height > obstacles[i].y
-                ) {
-                    gameOver();
-                    return;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
                 }
-                
-                // Remove off-screen obstacles and increase score
-                if (obstacles[i].x + obstacles[i].width < 0) {
-                    obstacles.splice(i, 1);
-                    score++;
-                    scoreDisplay.textContent = `Score: ${score}`;
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === current) {
+                    link.classList.add('active');
                 }
-            }
+            });
         }
 
-        function gameOver() {
-            gameRunning = false;
-            clearInterval(gameLoop);
-            clearInterval(obstacleTimer);
-            
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            ctx.fillRect(0, 0, 600, 300);
-            
-            ctx.fillStyle = 'white';
-            ctx.font = '30px Inter';
-            ctx.textAlign = 'center';
-            ctx.fillText('Game Over!', 300, 130);
-            ctx.font = '20px Inter';
-            ctx.fillText(`Score: ${score}`, 300, 170);
-            ctx.fillText('Click Start Game to play again', 300, 210);
-            
-            setTimeout(() => {
-                overlay.classList.remove('hidden');
-                scoreDisplay.classList.add('hidden');
-                document.removeEventListener('keydown', jump);
-                canvas.removeEventListener('click', jump);
-                canvas.removeEventListener('touchstart', jump);
-            }, 2000);
-        }
+        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('load', updateActiveNav);
+
+        // Animate timeline items on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach((el) => {
+            observer.observe(el);
+        });
 
         // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
