@@ -28,7 +28,7 @@
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(20, 20, 30, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -47,7 +47,85 @@
             box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
         }
 
-        /* Sliding Navigation Indicator */
+        /* Chess Board Background */
+        .chess-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(45deg, #8b5cf6 25%, transparent 25%),
+                linear-gradient(-45deg, #8b5cf6 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #8b5cf6 75%),
+                linear-gradient(-45deg, transparent 75%, #8b5cf6 75%);
+            background-size: 80px 80px;
+            background-position: 0 0, 0 40px, 40px -40px, -40px 0px;
+            animation: chessMove 20s linear infinite;
+        }
+
+        @keyframes chessMove {
+            0% { background-position: 0 0, 0 40px, 40px -40px, -40px 0px; }
+            100% { background-position: 80px 80px, 80px 120px, 120px 40px, 40px 80px; }
+        }
+
+        /* Floating Chess Pieces */
+        .chess-piece {
+            position: fixed;
+            font-size: 60px;
+            opacity: 0.08;
+            z-index: -1;
+            pointer-events: none;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            animation: floatPiece 15s ease-in-out infinite;
+        }
+
+        @keyframes floatPiece {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+                opacity: 0.05;
+            }
+            50% { 
+                transform: translateY(-30px) rotate(10deg); 
+                opacity: 0.12;
+            }
+        }
+
+        /* Strategic Lines */
+        .strategy-line {
+            position: fixed;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            height: 1px;
+            z-index: -1;
+            pointer-events: none;
+            animation: lineMove 8s ease-in-out infinite;
+        }
+
+        @keyframes lineMove {
+            0%, 100% { opacity: 0; transform: translateX(-100%); }
+            50% { opacity: 1; transform: translateX(100%); }
+        }
+
+        /* Knight Move Pattern */
+        .knight-move {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            border: 2px dashed rgba(139, 92, 246, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            animation: pulseMove 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseMove {
+            0%, 100% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.2); opacity: 0.2; }
+        }
+
+        /* Navigation */
         .nav-container {
             position: relative;
             display: flex;
@@ -82,23 +160,6 @@
             box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
         }
 
-        .nav-indicator::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899, #3b82f6, #8b5cf6);
-            background-size: 300% 300%;
-            border-radius: 22px;
-            z-index: -1;
-            animation: gradient-rotate 3s ease infinite;
-            opacity: 0.5;
-        }
-
-        @keyframes gradient-rotate {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
         .check-icon {
             opacity: 0;
             transform: scale(0) rotate(-180deg);
@@ -110,58 +171,15 @@
             transform: scale(1) rotate(0deg);
         }
 
-        /* Floating particles */
-        .particle {
-            position: fixed;
-            pointer-events: none;
-            opacity: 0.6;
-            animation: float-up 10s infinite linear;
-        }
-
-        @keyframes float-up {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.6;
-            }
-            90% {
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Text scramble effect */
-        .scramble-text {
-            display: inline-block;
-        }
-
-        /* Glow effect on scroll */
-        .glow-section {
-            position: relative;
-        }
-
-        .glow-section::before {
-            content: '';
+        /* Chess piece decorations in cards */
+        .chess-decoration {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            font-size: 120px;
+            opacity: 0.03;
+            right: -20px;
+            bottom: -20px;
             pointer-events: none;
-            z-index: -1;
-        }
-
-        .glow-section.active-glow::before {
-            opacity: 1;
+            transform: rotate(-15deg);
         }
 
         .timeline-item {
@@ -201,40 +219,69 @@
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
         }
 
-        /* Magnetic text effect */
-        .magnetic-text {
-            display: inline-block;
-            transition: transform 0.3s ease;
+        /* Strategy dots */
+        .strategy-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
         }
 
-        /* Cursor trail */
-        .cursor-trail {
+        /* Checkmate pattern overlay */
+        .checkmate-overlay {
             position: fixed;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: radial-gradient(circle at 20% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
             pointer-events: none;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.3s;
         }
     </style>
 </head>
 <body class="bg-[#0a0a0f] text-white overflow-x-hidden">
 
-    <!-- Cursor Trail Elements -->
-    <div class="cursor-trail" id="trail1"></div>
-    <div class="cursor-trail" id="trail2"></div>
-    <div class="cursor-trail" id="trail3"></div>
+    <!-- Chess Board Background -->
+    <div class="chess-bg"></div>
+    
+    <!-- Gradient Overlay -->
+    <div class="checkmate-overlay"></div>
 
-    <!-- Floating Particles Container -->
-    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+    <!-- Floating Chess Pieces -->
+    <div class="chess-piece" style="top: 10%; left: 5%; animation-delay: 0s;">♔</div>
+    <div class="chess-piece" style="top: 70%; left: 85%; animation-delay: 2s;">♕</div>
+    <div class="chess-piece" style="top: 30%; left: 90%; animation-delay: 4s;">♖</div>
+    <div class="chess-piece" style="top: 80%; left: 10%; animation-delay: 6s;">♗</div>
+    <div class="chess-piece" style="top: 50%; left: 3%; animation-delay: 8s;">♘</div>
+    <div class="chess-piece" style="top: 15%; left: 75%; animation-delay: 10s;">♙</div>
+    <div class="chess-piece" style="top: 60%; left: 50%; animation-delay: 12s; font-size: 40px;">♚</div>
+    <div class="chess-piece" style="top: 85%; left: 60%; animation-delay: 14s; font-size: 50px;">♛</div>
 
-    <!-- Navigation with Sliding Indicator -->
+    <!-- Strategic Lines -->
+    <div class="strategy-line" style="top: 20%; width: 60%; animation-delay: 0s;"></div>
+    <div class="strategy-line" style="top: 45%; width: 40%; animation-delay: 2s;"></div>
+    <div class="strategy-line" style="top: 70%; width: 50%; animation-delay: 4s;"></div>
+
+    <!-- Knight Move Indicators -->
+    <div class="knight-move" style="top: 25%; left: 15%;"></div>
+    <div class="knight-move" style="top: 65%; left: 70%; animation-delay: 2s;"></div>
+
+    <!-- Strategy Dots -->
+    <div class="strategy-dot" style="top: 30%; left: 20%;"></div>
+    <div class="strategy-dot" style="top: 60%; left: 80%;"></div>
+    <div class="strategy-dot" style="top: 40%; left: 60%;"></div>
+
+    <!-- Navigation -->
     <nav class="fixed w-full z-50 top-0 px-4 py-4">
         <div class="glass rounded-2xl px-6 py-4 max-w-6xl mx-auto flex justify-between items-center">
-            <div class="text-xl font-bold gradient-text magnetic-text" id="logo">Amey Chaudhari</div>
+            <div class="text-xl font-bold gradient-text">Amey Chaudhari</div>
             
             <div class="hidden md:block">
                 <div class="nav-container" id="navContainer">
@@ -288,18 +335,21 @@
         <a href="#contact" class="text-xl text-violet-400" onclick="toggleMenu()">Contact</a>
     </div>
 
-    <!-- Hero Section -->
-    <section id="about" class="min-h-screen flex items-center justify-center pt-20 px-4 glow-section">
-        <div class="max-w-4xl mx-auto text-center space-y-8">
-            <div class="inline-block px-4 py-2 glass rounded-full text-violet-300 text-sm mb-4 float-animation">
+    <!-- Hero Section with Chess Quote -->
+    <section id="about" class="min-h-screen flex items-center justify-center pt-20 px-4 relative">
+        <div class="max-w-4xl mx-auto text-center space-y-8 relative">
+            <!-- Chess decoration -->
+            <div class="chess-decoration">♞</div>
+            
+            <div class="inline-block px-4 py-2 glass rounded-full text-violet-300 text-sm mb-4">
                 MBA-HRM Candidate @ IIM Ranchi
             </div>
             
             <h1 class="text-5xl md:text-7xl font-bold">
-                Hi, I'm <span class="gradient-text magnetic-text">Amey Chaudhari</span>
+                Hi, I'm <span class="gradient-text">Amey Chaudhari</span>
             </h1>
 
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed scramble-text" id="heroText">
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
                 MBA candidate in Human Resources at IIM Ranchi, with a strong interest in 
                 <span class="text-violet-400 font-semibold">Talent Acquisition</span>, 
                 <span class="text-pink-400 font-semibold">HR Operations</span>, and 
@@ -307,16 +357,16 @@
                 I enjoy working on people processes, recruitment workflows, and building structured, people-centric HR practices.
             </p>
 
-            <p class="text-gray-500">
-                Driven to create meaningful impact through thoughtful and data-informed HR decisions.
+            <p class="text-gray-500 italic">
+                "Every move in HR, like chess, requires strategic thinking and foresight."
             </p>
 
             <div class="flex flex-wrap justify-center gap-4 pt-4">
-                <a href="mailto:ameychand2207@gmail.com" class="px-8 py-3 bg-white text-black rounded-full font-semibold hover:scale-105 transition-transform flex items-center gap-2 magnetic-btn">
+                <a href="mailto:ameychand2207@gmail.com" class="px-8 py-3 bg-white text-black rounded-full font-semibold hover:scale-105 transition-transform flex items-center gap-2">
                     <i data-lucide="mail" class="w-5 h-5"></i>
                     Email Me
                 </a>
-                <a href="https://www.linkedin.com/in/ameychaudhari22/" target="_blank" class="px-8 py-3 glass rounded-full font-semibold hover:bg-white/10 transition-colors flex items-center gap-2 magnetic-btn">
+                <a href="https://www.linkedin.com/in/ameychaudhari22/" target="_blank" class="px-8 py-3 glass rounded-full font-semibold hover:bg-white/10 transition-colors flex items-center gap-2">
                     <i data-lucide="linkedin" class="w-5 h-5"></i>
                     LinkedIn
                 </a>
@@ -325,14 +375,17 @@
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="py-20 px-4 glow-section">
+    <section id="education" class="py-20 px-4 relative">
+        <div class="chess-decoration" style="right: auto; left: -30px; bottom: auto; top: 50px;">♜</div>
+        
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 <span class="gradient-text">Education</span>
             </h2>
 
             <div class="space-y-6">
-                <div class="glass rounded-2xl p-6 hover-card education-card">
+                <div class="glass rounded-2xl p-6 hover-card relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♔</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                         <div>
                             <h3 class="text-xl font-bold text-violet-400">MBA - Human Resource Management</h3>
@@ -346,7 +399,8 @@
                     <p class="text-gray-500 text-sm mt-2">Specializing in Talent Acquisition, HR Operations, and Employee Engagement</p>
                 </div>
 
-                <div class="glass rounded-2xl p-6 hover-card education-card">
+                <div class="glass rounded-2xl p-6 hover-card relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♖</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                         <div>
                             <h3 class="text-xl font-bold text-pink-400">Bachelor of Engineering</h3>
@@ -360,7 +414,8 @@
                     <p class="text-gray-500 text-sm mt-2">Technical foundation with active involvement in Android Development Club and Microsoft Learn Student Club</p>
                 </div>
 
-                <div class="glass rounded-2xl p-6 hover-card education-card">
+                <div class="glass rounded-2xl p-6 hover-card relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♗</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                         <div>
                             <h3 class="text-xl font-bold text-blue-400">Higher Secondary (Class XII) - Science</h3>
@@ -374,7 +429,8 @@
                     <p class="text-gray-500 text-sm mt-2">Science stream with Physics, Chemistry, Mathematics</p>
                 </div>
 
-                <div class="glass rounded-2xl p-6 hover-card education-card">
+                <div class="glass rounded-2xl p-6 hover-card relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♙</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
                         <div>
                             <h3 class="text-xl font-bold text-orange-400">Secondary School (Class X)</h3>
@@ -392,14 +448,17 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-20 px-4 bg-white/5 glow-section">
+    <section id="experience" class="py-20 px-4 bg-white/5 relative">
+        <div class="chess-decoration" style="left: auto; right: -20px; top: 100px;">♛</div>
+        
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 <span class="gradient-text">Experience</span>
             </h2>
 
             <div class="space-y-8">
-                <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-pink-500 hover:shadow-lg hover:shadow-pink-500/20 transition-all">
+                <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-pink-500 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♚</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                         <div>
                             <h3 class="text-2xl font-bold text-white">Customer Experience Project</h3>
@@ -423,7 +482,8 @@
                     </ul>
                 </div>
 
-                <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-violet-500 hover:shadow-lg hover:shadow-violet-500/20 transition-all">
+                <div class="timeline-item glass rounded-2xl p-8 border-l-4 border-violet-500 relative overflow-hidden">
+                    <div class="absolute top-4 right-4 text-6xl opacity-5">♘</div>
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
                         <div>
                             <h3 class="text-2xl font-bold text-white">App Developer Intern</h3>
@@ -451,7 +511,7 @@
     </section>
 
     <!-- IEEE Publication Banner -->
-    <section class="py-12 px-4 glow-section">
+    <section class="py-12 px-4 relative">
         <div class="max-w-4xl mx-auto">
             <a href="https://ieeexplore.ieee.org/document/11140796" target="_blank" class="ieee-banner rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between hover:shadow-lg hover:shadow-blue-500/30 transition-all group relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -473,15 +533,18 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 px-4 glow-section">
-        <div class="max-w-6xl mx-auto">
+    <section id="projects" class="py-20 px-4 relative">
+        <div class="chess-decoration" style="right: 10%; bottom: 10%; font-size: 150px;">♟</div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
             <h2 class="text-4xl font-bold mb-4 text-center">
                 <span class="gradient-text">Projects</span>
             </h2>
             <p class="text-center text-gray-400 mb-12">Click on any project to view detailed information</p>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass rounded-2xl overflow-hidden hover-card project-card group" onclick="toggleProject('proj1')">
+                <div class="glass rounded-2xl overflow-hidden hover-card project-card group relative" onclick="toggleProject('proj1')">
+                    <div class="absolute top-2 right-2 text-4xl opacity-10">♖</div>
                     <div class="h-48 bg-gradient-to-br from-violet-600 to-purple-800 flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                         <i data-lucide="users-round" class="w-16 h-16 text-white/80 relative z-10 group-hover:scale-110 transition-transform"></i>
@@ -507,7 +570,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl overflow-hidden hover-card project-card group" onclick="toggleProject('proj2')">
+                <div class="glass rounded-2xl overflow-hidden hover-card project-card group relative" onclick="toggleProject('proj2')">
+                    <div class="absolute top-2 right-2 text-4xl opacity-10">♗</div>
                     <div class="h-48 bg-gradient-to-br from-blue-600 to-cyan-800 flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                         <i data-lucide="graduation-cap" class="w-16 h-16 text-white/80 relative z-10 group-hover:scale-110 transition-transform"></i>
@@ -533,7 +597,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl overflow-hidden hover-card project-card group" onclick="toggleProject('proj3')">
+                <div class="glass rounded-2xl overflow-hidden hover-card project-card group relative" onclick="toggleProject('proj3')">
+                    <div class="absolute top-2 right-2 text-4xl opacity-10">♕</div>
                     <div class="h-48 bg-gradient-to-br from-fuchsia-600 to-pink-800 flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                         <i data-lucide="shield" class="w-16 h-16 text-white/80 relative z-10 group-hover:scale-110 transition-transform"></i>
@@ -560,7 +625,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl overflow-hidden hover-card project-card group" onclick="toggleProject('proj4')">
+                <div class="glass rounded-2xl overflow-hidden hover-card project-card group relative" onclick="toggleProject('proj4')">
+                    <div class="absolute top-2 right-2 text-4xl opacity-10">♘</div>
                     <div class="h-48 bg-gradient-to-br from-green-600 to-teal-800 flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                         <i data-lucide="heart" class="w-16 h-16 text-white/80 relative z-10 group-hover:scale-110 transition-transform"></i>
@@ -586,7 +652,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl overflow-hidden hover-card project-card group md:col-span-2 lg:col-span-1" onclick="toggleProject('proj5')">
+                <div class="glass rounded-2xl overflow-hidden hover-card project-card group md:col-span-2 lg:col-span-1 relative" onclick="toggleProject('proj5')">
+                    <div class="absolute top-2 right-2 text-4xl opacity-10">♙</div>
                     <div class="h-48 bg-gradient-to-br from-orange-600 to-red-800 flex items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
                         <i data-lucide="activity" class="w-16 h-16 text-white/80 relative z-10 group-hover:scale-110 transition-transform"></i>
@@ -617,8 +684,10 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 px-4 bg-white/5 glow-section">
-        <div class="max-w-4xl mx-auto text-center">
+    <section id="skills" class="py-20 px-4 bg-white/5 relative">
+        <div class="chess-decoration" style="left: 5%; top: 20%;">♞</div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
             <h2 class="text-4xl font-bold mb-12">
                 <span class="gradient-text">Skills</span>
             </h2>
@@ -643,14 +712,17 @@
     </section>
 
     <!-- Achievements -->
-    <section id="achievements" class="py-20 px-4 glow-section">
-        <div class="max-w-4xl mx-auto">
+    <section id="achievements" class="py-20 px-4 relative">
+        <div class="chess-decoration" style="right: -10px; bottom: 50px;">🏆</div>
+        
+        <div class="max-w-4xl mx-auto relative z-10">
             <h2 class="text-4xl font-bold mb-12 text-center">
                 <span class="gradient-text">Achievements</span>
             </h2>
             
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card achievement-card">
+                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-6xl opacity-5">♔</div>
                     <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i data-lucide="trophy" class="w-6 h-6 text-yellow-400"></i>
                     </div>
@@ -660,7 +732,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card achievement-card">
+                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-6xl opacity-5">♖</div>
                     <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i data-lucide="award" class="w-6 h-6 text-blue-400"></i>
                     </div>
@@ -670,7 +743,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card achievement-card">
+                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-6xl opacity-5">♗</div>
                     <div class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i data-lucide="star" class="w-6 h-6 text-purple-400"></i>
                     </div>
@@ -680,7 +754,8 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card achievement-card">
+                <div class="glass rounded-2xl p-6 flex items-start gap-4 hover-card relative overflow-hidden">
+                    <div class="absolute -right-4 -bottom-4 text-6xl opacity-5">♕</div>
                     <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                         <i data-lucide="file-text" class="w-6 h-6 text-green-400"></i>
                     </div>
@@ -694,19 +769,21 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4 bg-white/5 glow-section">
-        <div class="max-w-2xl mx-auto glass rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
+    <section id="contact" class="py-20 px-4 bg-white/5 relative">
+        <div class="chess-decoration" style="left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(0deg); font-size: 200px; opacity: 0.02;">♚</div>
+        
+        <div class="max-w-2xl mx-auto glass rounded-3xl p-8 md:p-12 text-center relative z-10 border border-violet-500/20">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-600 via-pink-600 to-blue-600"></div>
             
             <h2 class="text-4xl font-bold mb-4">Let's Connect</h2>
             <p class="text-gray-400 mb-8">Open to opportunities in Talent Acquisition, HR Operations, and Employee Engagement</p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-                <a href="mailto:ameychand2207@gmail.com" class="flex items-center justify-center gap-3 px-6 py-4 bg-white text-black rounded-xl font-semibold hover:scale-105 transition-transform magnetic-btn">
+                <a href="mailto:ameychand2207@gmail.com" class="flex items-center justify-center gap-3 px-6 py-4 bg-white text-black rounded-xl font-semibold hover:scale-105 transition-transform">
                     <i data-lucide="mail" class="w-5 h-5"></i>
                     ameychand2207@gmail.com
                 </a>
-                <a href="https://www.linkedin.com/in/ameychaudhari22/" target="_blank" class="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 rounded-xl font-semibold hover:scale-105 transition-transform magnetic-btn">
+                <a href="https://www.linkedin.com/in/ameychaudhari22/" target="_blank" class="flex items-center justify-center gap-3 px-6 py-4 bg-blue-600 rounded-xl font-semibold hover:scale-105 transition-transform">
                     <i data-lucide="linkedin" class="w-5 h-5"></i>
                     LinkedIn Profile
                 </a>
@@ -716,7 +793,7 @@
                 <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-violet-500 transition-colors">
                 <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-violet-500 transition-colors">
                 <textarea rows="4" placeholder="Your Message" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-violet-500 transition-colors"></textarea>
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-violet-600 to-pink-600 rounded-xl font-bold hover:opacity-90 transition-opacity magnetic-btn">
+                <button type="submit" class="w-full py-3 bg-gradient-to-r from-violet-600 to-pink-600 rounded-xl font-bold hover:opacity-90 transition-opacity">
                     Send Message
                 </button>
             </form>
@@ -797,27 +874,12 @@
             });
 
             updateNavIndicator(currentElement);
-
-            // Add glow effect to active section
-            document.querySelectorAll('.glow-section').forEach(section => {
-                section.classList.remove('active-glow');
-            });
-            if (current) {
-                const activeSection = document.getElementById(current);
-                if (activeSection) activeSection.classList.add('active-glow');
-            }
         }
 
-        // Initialize indicator position
-        window.addEventListener('load', () => {
-            updateActiveNav();
-            createParticles();
-        });
-        
+        window.addEventListener('load', updateActiveNav);
         window.addEventListener('scroll', updateActiveNav);
         window.addEventListener('resize', updateActiveNav);
 
-        // Click handling for smooth indicator movement
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -825,65 +887,6 @@
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            });
-        });
-
-        // Create floating particles
-        function createParticles() {
-            const container = document.getElementById('particles-container');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 4 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = `rgba(${139 + Math.random() * 50}, ${92 + Math.random() * 50}, ${246}, ${Math.random() * 0.5 + 0.2})`;
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                container.appendChild(particle);
-            }
-        }
-
-        // Cursor trail effect
-        const trails = [
-            document.getElementById('trail1'),
-            document.getElementById('trail2'),
-            document.getElementById('trail3')
-        ];
-        
-        let mouseX = 0, mouseY = 0;
-        let trailPositions = trails.map(() => ({ x: 0, y: 0 }));
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            
-            trails.forEach((trail, index) => {
-                setTimeout(() => {
-                    trail.style.opacity = '1';
-                    trail.style.left = mouseX - 10 + 'px';
-                    trail.style.top = mouseY - 10 + 'px';
-                }, index * 50);
-            });
-        });
-
-        document.addEventListener('mouseleave', () => {
-            trails.forEach(trail => trail.style.opacity = '0');
-        });
-
-        // Magnetic buttons
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
-            });
-            
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = 'translate(0, 0)';
             });
         });
 
@@ -902,40 +905,6 @@
         }, observerOptions);
 
         document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
-
-        // Card hover tilt effect
-        document.querySelectorAll('.education-card, .achievement-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-            });
-        });
-
-        // Magnetic text effect for logo
-        const logo = document.getElementById('logo');
-        document.addEventListener('mousemove', (e) => {
-            const rect = logo.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            const distance = Math.sqrt(x * x + y * y);
-            
-            if (distance < 100) {
-                logo.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-            } else {
-                logo.style.transform = 'translate(0, 0)';
-            }
-        });
     </script>
 </body>
 </html>
